@@ -4,16 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.slj</groupId>
-	<artifactId>ng</artifactId>
+	<artifactId>pg</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	<name>ng</name>
+	<name>pg</name>
 	<description>三里街网格党建平台</description>
 
 	<modules>
 		<!-- 业务系统 -->
-		<module>ng-client</module>
+		<module>pg-client</module>
 		<!-- 前端视图 -->
-		<module>ng-web</module>
+		<module>pg-web</module>
 	</modules>
 
 	<properties>

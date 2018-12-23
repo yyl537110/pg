@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NgClientApplication {
+public class PgClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NgClientApplication.class, args);
+		SpringApplication.run(PgClientApplication.class, args);
 	}
 
 }

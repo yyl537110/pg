@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class NgClientApplicationTests {
+public class PgClientApplicationTests {
 
 	@Test
 	public void contextLoads() {
