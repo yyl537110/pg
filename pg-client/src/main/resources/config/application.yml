@@ -1,0 +1,37 @@
+server:
+  port: 9001
+spring:
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/pg?characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: pgHikariCP
+      connection-timeout: 30000
+      maximum-pool-size: 20
+      minimum-idle: 10
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      auto-commit: true
+fastdfs:
+  charset: UTF-8
+  antiStealToken: false
+  connetTimeout: 2
+  networkTimeout: 15
+  cluster: test1
+  groupId: test1
+  groupName: sljGroup
+  trackerServer: 140.143.236.173:22122
+  trackerPort: 8888
+  prefix: http://140.143.236.173/fastdfs
+mysql:
+  bakHome: D:\backupDatabase\
+  bakupCmd: C:\Program Files\MySQL\MySQL Server 5.7\bin\mysqldump -hlocalhost -uroot -p123456 --default-character-set=utf8 pg   --ignore-table=pg.t_pg_bak_log
+  recoverCmd: C:\Program Files\MySQL\MySQL Server 5.7\bin\mysql -hlocalhost -uroot -p123456 --default-character-set=utf8 pg
+
+logging:
+  config: classpath:config/logback-spring.xml

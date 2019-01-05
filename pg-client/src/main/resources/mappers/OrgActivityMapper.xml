@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slj.pg.dao.mapper.OrgActivityMapper">
+  <resultMap id="BaseResultMap" type="com.slj.pg.bean.OrgActivity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="activity_type" jdbcType="TINYINT" property="activityType" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="topic" jdbcType="VARCHAR" property="topic" />
+    <result column="site" jdbcType="VARCHAR" property="site" />
+    <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, activity_type, name, topic, site, org_id, time, introduction, gmt_create, gmt_modified, 
+    status
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_pg_org_activity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_pg_org_activity
+    <where>
+      <if test="activityType != null">
+        AND activity_type = #{activityType,jdbcType=TINYINT}
+      </if>
+      <if test="topic != null">
+        AND topic like concat ('%',#{topic,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="time != null">
+        AND DATE_FORMAT(time, '%Y-%m-%d') = #{time,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        AND status = #{status,jdbcType=TINYINT}
+      </if>
+    </where>
+    ORDER BY gmt_modified DESC
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from t_pg_org_activity
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.slj.pg.bean.OrgActivity"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into t_pg_org_activity
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="activityType != null">
+        activity_type,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="topic != null">
+        topic,
+      </if>
+      <if test="site != null">
+        site,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+        gmt_create,gmt_modified,
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="activityType != null">
+        #{activityType,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null">
+        #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null">
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+        now(),now(),
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.slj.pg.bean.OrgActivity">
+    update t_pg_org_activity
+    <set>
+      <if test="activityType != null">
+        activity_type = #{activityType,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="topic != null">
+        topic = #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="site != null">
+        site = #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+        gmt_modified = now(),
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

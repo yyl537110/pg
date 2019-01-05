@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <!--<appender name="ROLLIN" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--&lt;!&ndash; daily rollover &ndash;&gt;-->
+    <!--<FileNamePattern>/iflytek/hiseeJK/log/hiseeJK.%d{yyyy-MM-dd}.%i.log</FileNamePattern>-->
+    <!--<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+    <!--<maxFileSize>500MB</maxFileSize>-->
+    <!--</timeBasedFileNamingAndTriggeringPolicy>-->
+    <!--<maxHistory>30</maxHistory>-->
+    <!--</rollingPolicy>-->
+    <!--<encoder>-->
+    <!--<Pattern>%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){red} [%thread] %-5level %logger{35} - %msg %n</Pattern>-->
+    <!--</encoder>-->
+    <!--</appender>-->
+    <root level="INFO">
+        <!--<appender-ref ref="ROLLIN"/>-->
+    </root>
+    <logger name="org.springframework.web" level="INFO"/>
+    <logger name="com.slj.pg.dao.mapper" level="DEBUG" additivity="true">
+        <!--<appender-ref ref="ROLLIN" />-->
+    </logger>
+</configuration>

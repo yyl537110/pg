@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slj.pg.dao.mapper.HelpLogMapper">
+  <resultMap id="BaseResultMap" type="com.slj.pg.bean.HelpLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="poor_id" jdbcType="INTEGER" property="poorId" />
+    <result column="cadre_id" jdbcType="INTEGER" property="cadreId" />
+    <result column="project" jdbcType="VARCHAR" property="project" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
+    <result column="time" jdbcType="DATE" property="time" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <association property="helpPoor" column="poor_id"
+                 select="com.slj.pg.dao.mapper.HelpPoorMapper.findById"/>
+    <association property="helpCadre" column="cadre_id"
+                 select="com.slj.pg.dao.mapper.HelpCadreMapper.findById"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, poor_id, cadre_id, project, money, time, gmt_create, gmt_modified, status
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_pg_help_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAll"  resultMap="BaseResultMap">
+    select
+    hl.id, hl.poor_id, hl.cadre_id, hl.project, hl.money, hl.time, hl.gmt_create, hl.gmt_modified, hl.status
+    from t_pg_help_log hl
+    left JOIN t_pg_help_poor hp on hl.poor_id = hp.id
+    LEFT JOIN t_pg_help_cadre hc on hl.cadre_id = hc.id
+    <where>
+      <if test="poorId != null">
+        AND hl.poor_id = #{poorId,jdbcType=INTEGER}
+      </if>
+      <if test="poorName != null">
+        AND hp.name LIKE concat('%',#{poorName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="cadreId != null">
+        AND hl.cadre_id = #{cadreId,jdbcType=INTEGER}
+      </if>
+      <if test="cadreName != null">
+        AND hc.name LIKE concat('%',#{cadreName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="status != null">
+        AND hl.status = #{status,jdbcType=TINYINT}
+      </if>
+    </where>
+    ORDER BY hl.gmt_modified DESC
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from t_pg_help_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.slj.pg.bean.HelpLog"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into t_pg_help_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="poorId != null">
+        poor_id,
+      </if>
+      <if test="cadreId != null">
+        cadre_id,
+      </if>
+      <if test="project != null">
+        project,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+        gmt_create,
+        gmt_modified,
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="poorId != null">
+        #{poorId,jdbcType=INTEGER},
+      </if>
+      <if test="cadreId != null">
+        #{cadreId,jdbcType=INTEGER},
+      </if>
+      <if test="project != null">
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+        now(),
+        now(),
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.slj.pg.bean.HelpLog">
+    update t_pg_help_log
+    <set>
+      <if test="poorId != null">
+        poor_id = #{poorId,jdbcType=INTEGER},
+      </if>
+      <if test="cadreId != null">
+        cadre_id = #{cadreId,jdbcType=INTEGER},
+      </if>
+      <if test="project != null">
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+        gmt_modified = now(),
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

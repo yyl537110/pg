@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slj.pg.dao.mapper.DictMapper">
+  <resultMap id="BaseResultMap" type="com.slj.pg.bean.Dict">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+    <result column="value" jdbcType="TINYINT" property="value" />
+    <result column="seq" jdbcType="TINYINT" property="seq" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, type, text, value, seq
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_pg_dict
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_pg_dict
+    <where>
+      <if test="type != null">
+        AND type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="text != null">
+        AND text like concat('%',#{text,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="value != null">
+        AND value = #{value,jdbcType=TINYINT}
+      </if>
+      <if test="seq != null">
+        AND seq = #{seq,jdbcType=TINYINT}
+      </if>
+    </where>
+    ORDER BY seq ASC
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from t_pg_dict
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.slj.pg.bean.Dict" useGeneratedKeys="true" keyProperty="id">
+    insert into t_pg_dict
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="text != null">
+        text,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="seq != null">
+        seq,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=TINYINT},
+      </if>
+      <if test="seq != null">
+        #{seq,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.slj.pg.bean.Dict">
+    update t_pg_dict
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=TINYINT},
+      </if>
+      <if test="seq != null">
+        seq = #{seq,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slj.pg.dao.mapper.MeetingMapper">
+  <resultMap id="BaseResultMap" type="com.slj.pg.bean.Meeting">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="topic" jdbcType="VARCHAR" property="topic" />
+    <result column="org_id" jdbcType="INTEGER" property="orgId" />
+    <result column="site" jdbcType="VARCHAR" property="site" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="meeting_type" jdbcType="TINYINT" property="meetingType" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="participants" jdbcType="VARCHAR" property="participants" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, topic, org_id, site, time, meeting_type, introduction, participants, gmt_create, 
+    gmt_modified, status
+  </sql>
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_pg_meeting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_pg_meeting
+    <where>
+      <if test="orgId != null">
+        AND org_id = #{orgId,jdbcType=VARCHAR}
+      </if>
+      <if test="meetingType != null">
+       AND meeting_type = #{meetingType,jdbcType=TINYINT}
+      </if>
+      <if test="topic != null">
+        AND topic like concat ('%',#{topic,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="time != null">
+        AND DATE_FORMAT(time, '%Y-%m-%d') = #{time,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        AND status = #{status,jdbcType=TINYINT}
+      </if>
+    </where>
+    ORDER BY gmt_modified DESC
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from t_pg_meeting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.slj.pg.bean.Meeting"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into t_pg_meeting
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="topic != null">
+        topic,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="site != null">
+        site,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="meetingType != null">
+        meeting_type,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="participants != null">
+        participants,
+      </if>
+        gmt_create,
+        gmt_modified,
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="topic != null">
+        #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="site != null">
+        #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meetingType != null">
+        #{meetingType,jdbcType=TINYINT},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="participants != null">
+        #{participants,jdbcType=VARCHAR},
+      </if>
+        now(),now(),
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.slj.pg.bean.Meeting">
+    update t_pg_meeting
+    <set>
+      <if test="topic != null">
+        topic = #{topic,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="site != null">
+        site = #{site,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meetingType != null">
+        meeting_type = #{meetingType,jdbcType=TINYINT},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="participants != null">
+        participants = #{participants,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+        gmt_modified = now(),
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

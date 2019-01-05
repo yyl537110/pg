@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slj.pg.dao.mapper.OrganizationMapper">
+  <resultMap id="BaseResultMap" type="com.slj.pg.bean.Organization">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="width" jdbcType="DOUBLE" property="width" />
+    <result column="height" jdbcType="DOUBLE" property="height" />
+    <result column="iconx" jdbcType="INTEGER" property="iconx" />
+    <result column="icony" jdbcType="INTEGER" property="icony" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="secretary" jdbcType="VARCHAR" property="secretary" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="area" jdbcType="DOUBLE" property="area" />
+    <result column="street_num" jdbcType="INTEGER" property="streetNum" />
+    <result column="village_num" jdbcType="INTEGER" property="villageNum" />
+    <result column="people_num" jdbcType="INTEGER" property="peopleNum" />
+    <result column="sub_num" jdbcType="INTEGER" property="subNum" />
+    <result column="member_num" jdbcType="INTEGER" property="memberNum" />
+    <result column="county_party_num" jdbcType="INTEGER" property="countyPartyNum" />
+    <result column="rep_num" jdbcType="INTEGER" property="repNum" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="online_num" jdbcType="INTEGER" property="onlineNum" />
+    <result column="duty_num" jdbcType="INTEGER" property="dutyNum" />
+    <result column="hq_num" jdbcType="INTEGER" property="hqNum" />
+    <result column="branch_num" jdbcType="INTEGER" property="branchNum" />
+  </resultMap>
+
+  <!--<sql id="Base_Column_List">
+    id, name, parent_id, level, gmt_create, gmt_modified, status
+  </sql>-->
+  <sql id="Base_Column_List">
+    id, name, parent_id, level, gmt_create, gmt_modified, status, width, height, iconx,
+    icony, path, secretary, address, area, street_num, village_num, people_num, sub_num,
+    member_num, county_party_num, rep_num, introduction, online_num, duty_num, hq_num,
+    branch_num
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_pg_organization
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_pg_organization
+    <where>
+      <if test="parentId != null">
+        AND parent_id = #{parentId,jdbcType=INTEGER}
+      </if>
+      <if test="level != null">
+        AND level = #{level,jdbcType=INTEGER}
+      </if>
+      <if test="status != null">
+        AND status = #{status,jdbcType=TINYINT}
+      </if>
+    </where>
+    ORDER BY gmt_create DESC
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from t_pg_organization
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.slj.pg.bean.Organization"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into t_pg_organization
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.slj.pg.bean.Organization">
+    update t_pg_organization
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

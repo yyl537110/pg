@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slj.pg.dao.mapper.PartyMemberMapper">
+  <resultMap id="BaseResultMap" type="com.slj.pg.bean.PartyMember">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="org_id" jdbcType="INTEGER" property="orgId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="name_used" jdbcType="VARCHAR" property="nameUsed" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="nation" jdbcType="TINYINT" property="nation" />
+    <result column="native_place" jdbcType="VARCHAR" property="nativePlace" />
+    <result column="birth_place" jdbcType="VARCHAR" property="birthPlace" />
+    <result column="marriage_state" jdbcType="TINYINT" property="marriageState" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="gmt_joined" jdbcType="DATE" property="gmtJoined" />
+    <result column="pass_state" jdbcType="TINYINT" property="passState" />
+    <result column="introducer" jdbcType="VARCHAR" property="introducer" />
+    <result column="gmt_passed" jdbcType="DATE" property="gmtPassed" />
+    <result column="dues" jdbcType="DOUBLE" property="dues" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="account_address" jdbcType="VARCHAR" property="accountAddress" />
+    <result column="identity" jdbcType="VARCHAR" property="identity" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="degree" jdbcType="VARCHAR" property="degree" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="qualification" jdbcType="TINYINT" property="qualification" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="company_address" jdbcType="VARCHAR" property="companyAddress" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="technique" jdbcType="VARCHAR" property="technique" />
+    <result column="gmt_retired" jdbcType="DATE" property="gmtRetired" />
+    <result column="gmt_leaved" jdbcType="DATE" property="gmtLeaved" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, org_id, name, sex, name_used, birthday, nation, native_place, birth_place, marriage_state, 
+    id_card, phone, gmt_joined, pass_state, introducer, gmt_passed, dues, address, account_address, 
+    identity, school, degree, major, qualification, company, company_address, job, technique, 
+    gmt_retired, gmt_leaved, gmt_create, gmt_modified, status
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_pg_party_member
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_pg_party_member
+    <where>
+      <if test="orgId != null">
+        AND org_id = #{orgId,jdbcType=INTEGER}
+      </if>
+      <if test="name != null">
+        AND name like concat('%',#{name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="phone != null">
+        AND phone like concat('%',#{phone,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="status != null">
+        AND status = #{status,jdbcType=TINYINT}
+      </if>
+    </where>
+    ORDER BY gmt_modified DESC
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from t_pg_party_member
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.slj.pg.bean.PartyMember"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into t_pg_party_member
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="nameUsed != null">
+        name_used,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="nation != null">
+        nation,
+      </if>
+      <if test="nativePlace != null">
+        native_place,
+      </if>
+      <if test="birthPlace != null">
+        birth_place,
+      </if>
+      <if test="marriageState != null">
+        marriage_state,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="gmtJoined != null">
+        gmt_joined,
+      </if>
+      <if test="passState != null">
+        pass_state,
+      </if>
+      <if test="introducer != null">
+        introducer,
+      </if>
+      <if test="gmtPassed != null">
+        gmt_passed,
+      </if>
+      <if test="dues != null">
+        dues,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="accountAddress != null">
+        account_address,
+      </if>
+      <if test="identity != null">
+        identity,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="degree != null">
+        degree,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="qualification != null">
+        qualification,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="companyAddress != null">
+        company_address,
+      </if>
+      <if test="job != null">
+        job,
+      </if>
+      <if test="technique != null">
+        technique,
+      </if>
+      <if test="gmtRetired != null">
+        gmt_retired,
+      </if>
+      <if test="gmtLeaved != null">
+        gmt_leaved,
+      </if>
+        gmt_create,
+        gmt_modified,
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="nameUsed != null">
+        #{nameUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="nation != null">
+        #{nation,jdbcType=TINYINT},
+      </if>
+      <if test="nativePlace != null">
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="birthPlace != null">
+        #{birthPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="marriageState != null">
+        #{marriageState,jdbcType=TINYINT},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtJoined != null">
+        #{gmtJoined,jdbcType=DATE},
+      </if>
+      <if test="passState != null">
+        #{passState,jdbcType=TINYINT},
+      </if>
+      <if test="introducer != null">
+        #{introducer,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtPassed != null">
+        #{gmtPassed,jdbcType=DATE},
+      </if>
+      <if test="dues != null">
+        #{dues,jdbcType=DOUBLE},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAddress != null">
+        #{accountAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null">
+        #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null">
+        #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="qualification != null">
+        #{qualification,jdbcType=TINYINT},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null">
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="technique != null">
+        #{technique,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtRetired != null">
+        #{gmtRetired,jdbcType=DATE},
+      </if>
+      <if test="gmtLeaved != null">
+        #{gmtLeaved,jdbcType=DATE},
+      </if>
+        now(),now(),
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.slj.pg.bean.PartyMember">
+    update t_pg_party_member
+    <set>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="nameUsed != null">
+        name_used = #{nameUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="nation != null">
+        nation = #{nation,jdbcType=TINYINT},
+      </if>
+      <if test="nativePlace != null">
+        native_place = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="birthPlace != null">
+        birth_place = #{birthPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="marriageState != null">
+        marriage_state = #{marriageState,jdbcType=TINYINT},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtJoined != null">
+        gmt_joined = #{gmtJoined,jdbcType=DATE},
+      </if>
+      <if test="passState != null">
+        pass_state = #{passState,jdbcType=TINYINT},
+      </if>
+      <if test="introducer != null">
+        introducer = #{introducer,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtPassed != null">
+        gmt_passed = #{gmtPassed,jdbcType=DATE},
+      </if>
+      <if test="dues != null">
+        dues = #{dues,jdbcType=DOUBLE},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="accountAddress != null">
+        account_address = #{accountAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="identity != null">
+        identity = #{identity,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="degree != null">
+        degree = #{degree,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="qualification != null">
+        qualification = #{qualification,jdbcType=TINYINT},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null">
+        company_address = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="technique != null">
+        technique = #{technique,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtRetired != null">
+        gmt_retired = #{gmtRetired,jdbcType=DATE},
+      </if>
+      <if test="gmtLeaved != null">
+        gmt_leaved = #{gmtLeaved,jdbcType=DATE},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+        gmt_modified = now(),
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slj.pg.dao.mapper.VolunteerMapper">
+  <resultMap id="BaseResultMap" type="com.slj.pg.bean.Volunteer">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="duration" jdbcType="DOUBLE" property="duration" />
+    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="native_place" jdbcType="VARCHAR" property="nativePlace" />
+    <result column="polity_state" jdbcType="TINYINT" property="polityState" />
+    <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
+    <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, name, sex, duration, id_card, phone, age, address, native_place, polity_state, 
+    gmt_create, gmt_modified, status
+  </sql>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_pg_volunteer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_pg_volunteer
+    <where>
+      <if test="name != null">
+        AND name LIKE concat('%',#{name,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="sex != null">
+        AND sex = #{sex,jdbcType=TINYINT}
+      </if>
+      <if test="duration != null">
+        AND duration = #{duration,jdbcType=DOUBLE}
+      </if>
+      <if test="idCard != null">
+        AND id_card LIKE concat('%',#{idCard,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="phone != null">
+        AND phone LIKE concat('%',#{phone,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="age != null">
+        AND age = #{age,jdbcType=INTEGER}
+      </if>
+      <if test="address != null">
+        AND address LIKE concat('%',#{address,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="polityState != null">
+        AND polity_state = #{polityState,jdbcType=TINYINT}
+      </if>
+      <if test="status != null">
+        AND status = #{status,jdbcType=TINYINT}
+      </if>
+    </where>
+    ORDER BY gmt_modified DESC
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from t_pg_volunteer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.slj.pg.bean.Volunteer"
+          useGeneratedKeys="true" keyProperty="id">
+    insert into t_pg_volunteer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+      <if test="idCard != null">
+        id_card,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="nativePlace != null">
+        native_place,
+      </if>
+      <if test="polityState != null">
+        polity_state,
+      </if>
+        gmt_create,
+        gmt_modified,
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=DOUBLE},
+      </if>
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null">
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="polityState != null">
+        #{polityState,jdbcType=TINYINT},
+      </if>
+        now(),
+        now(),
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="update" parameterType="com.slj.pg.bean.Volunteer">
+    update t_pg_volunteer
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=DOUBLE},
+      </if>
+      <if test="idCard != null">
+        id_card = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null">
+        native_place = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="polityState != null">
+        polity_state = #{polityState,jdbcType=TINYINT},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+        gmt_modified = now(),
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>
