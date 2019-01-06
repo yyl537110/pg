@@ -53,7 +53,7 @@ public class MeetingController implements BaseController<Meeting> {
     @Override
     @DeleteMapping("/{id}")
     @ApiOperation(value = "三会一课记录删除", notes = "三会一课记录删除", response = HttpMessage.class)
-    public HttpMessage<Boolean> delete(Integer id) {
+    public HttpMessage<Boolean> delete(@PathVariable(value = "id") Integer id) {
         Meeting updateObj = new Meeting();
         updateObj.setId(id);
         updateObj.setStatus(ParamConstants.STATUS_DELETE);
@@ -73,7 +73,7 @@ public class MeetingController implements BaseController<Meeting> {
     @Override
     @GetMapping("/{id}")
     @ApiOperation(value = "根据Id查询三会一课记录详情", notes = "根据Id查询三会一课记录详情", response = HttpMessage.class)
-    public HttpMessage<Meeting> detail(Integer id) {
+    public HttpMessage<Meeting> detail(@PathVariable(value = "id") Integer id) {
         return new HttpMessage<>(meetingService.findById(id),CustomStatus.SUCCESS);
     }
 }

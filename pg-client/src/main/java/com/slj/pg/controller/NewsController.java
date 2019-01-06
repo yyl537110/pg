@@ -52,7 +52,7 @@ public class NewsController implements BaseController<News> {
     @Override
     @DeleteMapping("/{id}")
     @ApiOperation(value = "党建风采记录删除", notes = "党建风采记录删除", response = HttpMessage.class)
-    public HttpMessage<Boolean> delete(Integer id) {
+    public HttpMessage<Boolean> delete(@PathVariable(value = "id") Integer id) {
         News updateObj = new News();
         updateObj.setId(id);
         updateObj.setStatus(ParamConstants.STATUS_DELETE);
@@ -72,7 +72,7 @@ public class NewsController implements BaseController<News> {
     @Override
     @GetMapping("/{id}")
     @ApiOperation(value = "根据Id查询党建风采记录详情", notes = "根据Id查询党建风采记录详情", response = HttpMessage.class)
-    public HttpMessage<News> detail(Integer id) {
+    public HttpMessage<News> detail(@PathVariable(value = "id")Integer id) {
         return new HttpMessage<>(newsService.findById(id),CustomStatus.SUCCESS);
     }
 }

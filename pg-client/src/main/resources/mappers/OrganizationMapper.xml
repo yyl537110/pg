@@ -9,6 +9,8 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="left" jdbcType="INTEGER" property="left" />
+    <result column="top" jdbcType="INTEGER" property="top" />
     <result column="width" jdbcType="DOUBLE" property="width" />
     <result column="height" jdbcType="DOUBLE" property="height" />
     <result column="iconx" jdbcType="INTEGER" property="iconx" />
@@ -35,7 +37,7 @@
     id, name, parent_id, level, gmt_create, gmt_modified, status
   </sql>-->
   <sql id="Base_Column_List">
-    id, name, parent_id, level, gmt_create, gmt_modified, status, width, height, iconx,
+    id, name, parent_id, level, gmt_create, gmt_modified, status, `left`, top, width, height, iconx,
     icony, path, secretary, address, area, street_num, village_num, people_num, sub_num,
     member_num, county_party_num, rep_num, introduction, online_num, duty_num, hq_num,
     branch_num

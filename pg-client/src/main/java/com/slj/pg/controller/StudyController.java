@@ -53,7 +53,7 @@ public class StudyController implements BaseController<Study> {
     @Override
     @DeleteMapping("/{id}")
     @ApiOperation(value = "两学一做记录删除", notes = "两学一做记录删除", response = HttpMessage.class)
-    public HttpMessage<Boolean> delete(Integer id) {
+    public HttpMessage<Boolean> delete(@PathVariable(value = "id") Integer id) {
         Study updateObj = new Study();
         updateObj.setId(id);
         updateObj.setStatus(ParamConstants.STATUS_DELETE);
@@ -73,7 +73,7 @@ public class StudyController implements BaseController<Study> {
     @Override
     @GetMapping("/{id}")
     @ApiOperation(value = "根据Id查询两学一做记录详情", notes = "根据Id查询两学一做记录详情", response = HttpMessage.class)
-    public HttpMessage<Study> detail(Integer id) {
+    public HttpMessage<Study> detail(@PathVariable(value = "id") Integer id) {
         return new HttpMessage<>(studyService.findById(id),CustomStatus.SUCCESS);
     }
 }

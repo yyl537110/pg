@@ -52,7 +52,7 @@ public class HelpPoorController implements BaseController<HelpPoor> {
     @Override
     @DeleteMapping("/{id}")
     @ApiOperation(value = "扶贫对象记录删除", notes = "扶贫对象记录删除", response = HttpMessage.class)
-    public HttpMessage<Boolean> delete(Integer id) {
+    public HttpMessage<Boolean> delete(@PathVariable(value = "id") Integer id) {
         HelpPoor updateObj = new HelpPoor();
         updateObj.setId(id);
         updateObj.setStatus(ParamConstants.STATUS_DELETE);
@@ -72,7 +72,7 @@ public class HelpPoorController implements BaseController<HelpPoor> {
     @Override
     @GetMapping("/{id}")
     @ApiOperation(value = "根据Id查询扶贫对象记录详情", notes = "根据Id查询扶贫对象记录详情", response = HttpMessage.class)
-    public HttpMessage<HelpPoor> detail(Integer id) {
+    public HttpMessage<HelpPoor> detail(@PathVariable(value = "id") Integer id) {
         return new HttpMessage<>(helpPoorService.findById(id),CustomStatus.SUCCESS);
     }
 }

@@ -52,7 +52,7 @@ public class HelpLogController implements BaseController<HelpLog> {
     @Override
     @DeleteMapping("/{id}")
     @ApiOperation(value = "帮扶记录删除", notes = "帮扶记录删除", response = HttpMessage.class)
-    public HttpMessage<Boolean> delete(Integer id) {
+    public HttpMessage<Boolean> delete(@PathVariable(value = "id") Integer id) {
         HelpLog updateObj = new HelpLog();
         updateObj.setId(id);
         updateObj.setStatus(ParamConstants.STATUS_DELETE);
@@ -72,7 +72,7 @@ public class HelpLogController implements BaseController<HelpLog> {
     @Override
     @GetMapping("/{id}")
     @ApiOperation(value = "根据Id查询帮扶记录详情", notes = "根据Id查询帮扶记录详情", response = HttpMessage.class)
-    public HttpMessage<HelpLog> detail(Integer id) {
+    public HttpMessage<HelpLog> detail(@PathVariable(value = "id") Integer id) {
         return new HttpMessage<>(helpLogService.findById(id),CustomStatus.SUCCESS);
     }
 }

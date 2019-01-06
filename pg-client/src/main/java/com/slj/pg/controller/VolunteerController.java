@@ -53,7 +53,7 @@ public class VolunteerController implements BaseController<Volunteer> {
     @Override
     @DeleteMapping("/{id}")
     @ApiOperation(value = "志愿者记录删除", notes = "志愿者记录删除", response = HttpMessage.class)
-    public HttpMessage<Boolean> delete(Integer id) {
+    public HttpMessage<Boolean> delete(@PathVariable(value = "id") Integer id) {
         Volunteer updateObj = new Volunteer();
         updateObj.setId(id);
         updateObj.setStatus(ParamConstants.STATUS_DELETE);
@@ -73,7 +73,7 @@ public class VolunteerController implements BaseController<Volunteer> {
     @Override
     @GetMapping("/{id}")
     @ApiOperation(value = "根据Id查询志愿者记录详情", notes = "根据Id查询志愿者记录详情", response = HttpMessage.class)
-    public HttpMessage<Volunteer> detail(Integer id) {
+    public HttpMessage<Volunteer> detail(@PathVariable(value = "id") Integer id) {
         return new HttpMessage<>(volunteerService.findById(id),CustomStatus.SUCCESS);
     }
 }

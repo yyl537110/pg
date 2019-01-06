@@ -54,7 +54,7 @@ public class OrgActivityController implements BaseController<OrgActivity> {
     @Override
     @DeleteMapping("/{id}")
     @ApiOperation(value = "组织活动记录删除", notes = "组织活动记录删除", response = HttpMessage.class)
-    public HttpMessage<Boolean> delete(Integer id) {
+    public HttpMessage<Boolean> delete(@PathVariable(value = "id") Integer id) {
         OrgActivity updateObj = new OrgActivity();
         updateObj.setId(id);
         updateObj.setStatus(ParamConstants.STATUS_DELETE);
@@ -74,7 +74,7 @@ public class OrgActivityController implements BaseController<OrgActivity> {
     @Override
     @GetMapping("/{id}")
     @ApiOperation(value = "根据Id查询组织活动记录详情", notes = "根据Id查询组织活动记录详情", response = HttpMessage.class)
-    public HttpMessage<OrgActivity> detail(Integer id) {
+    public HttpMessage<OrgActivity> detail(@PathVariable(value = "id") Integer id) {
         return new HttpMessage<>(orgActivityService.findById(id),CustomStatus.SUCCESS);
     }
 }

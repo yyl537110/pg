@@ -3,6 +3,7 @@
 <mapper namespace="com.slj.pg.dao.mapper.HelpPoorMapper">
   <resultMap id="BaseResultMap" type="com.slj.pg.bean.HelpPoor">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="org_id" jdbcType="INTEGER" property="orgId" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="TINYINT" property="sex" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
@@ -17,7 +18,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, name, sex, phone, id_card, age, address, poor_reason, help_progress, gmt_create, 
+    id, org_id, name, sex, phone, id_card, age, address, poor_reason, help_progress, gmt_create,
     gmt_modified, status
   </sql>
 
@@ -33,6 +34,9 @@
     <include refid="Base_Column_List" />
     from t_pg_help_poor
     <where>
+      <if test="orgId != null">
+        AND org_id = #{orgId,jdbcType=INTEGER}
+      </if>
       <if test="name != null">
         AND name LIKE concat('%',#{name,jdbcType=VARCHAR},'%')
       </if>
@@ -76,6 +80,9 @@
       <if test="id != null">
         id,
       </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
       <if test="name != null">
         name,
       </if>
@@ -109,6 +116,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=INTEGER},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -145,6 +155,9 @@
   <update id="update" parameterType="com.slj.pg.bean.HelpPoor">
     update t_pg_help_poor
     <set>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=INTEGER},
+      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>

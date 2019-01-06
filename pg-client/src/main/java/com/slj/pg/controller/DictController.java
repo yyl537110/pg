@@ -53,7 +53,7 @@ public class DictController implements BaseController<Dict> {
     @Override
     @DeleteMapping("/{id}")
     @ApiOperation(value = "数据字典记录删除", notes = "数据字典记录删除", response = HttpMessage.class)
-    public HttpMessage<Boolean> delete(Integer id) {
+    public HttpMessage<Boolean> delete(@PathVariable(value = "id") Integer id) {
         if(dictService.deleteById(id)) {
             return new HttpMessage<>(true,CustomStatus.SUCCESS);
         }
@@ -70,7 +70,7 @@ public class DictController implements BaseController<Dict> {
     @Override
     @GetMapping("/{id}")
     @ApiOperation(value = "根据Id查询数据字典记录详情", notes = "根据Id查询数据字典记录详情", response = HttpMessage.class)
-    public HttpMessage<Dict> detail(Integer id) {
+    public HttpMessage<Dict> detail(@PathVariable(value = "id") Integer id) {
         return new HttpMessage<>(dictService.findById(id),CustomStatus.SUCCESS);
     }
 }

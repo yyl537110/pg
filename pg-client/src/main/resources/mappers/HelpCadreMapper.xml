@@ -27,6 +27,9 @@
     <include refid="Base_Column_List" />
     from t_pg_help_cadre
     <where>
+      <if test="orgId != null">
+        AND org_id = #{orgId,jdbcType=INTEGER}
+      </if>
       <if test="name != null">
         AND name LIKE concat('%',#{name,jdbcType=VARCHAR},'%')
       </if>

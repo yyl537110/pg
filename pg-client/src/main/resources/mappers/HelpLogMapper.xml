@@ -35,6 +35,9 @@
     left JOIN t_pg_help_poor hp on hl.poor_id = hp.id
     LEFT JOIN t_pg_help_cadre hc on hl.cadre_id = hc.id
     <where>
+      <if test="orgId != null">
+        AND hp.org_id = #{orgId,jdbcType=INTEGER}
+      </if>
       <if test="poorId != null">
         AND hl.poor_id = #{poorId,jdbcType=INTEGER}
       </if>

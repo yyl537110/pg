@@ -52,7 +52,7 @@ public class LinkController implements BaseController<Link> {
     @Override
     @DeleteMapping("/{id}")
     @ApiOperation(value = "工作链接记录删除", notes = "工作链接记录删除", response = HttpMessage.class)
-    public HttpMessage<Boolean> delete(Integer id) {
+    public HttpMessage<Boolean> delete(@PathVariable("id") Integer id) {
         Link updateObj = new Link();
         updateObj.setId(id);
         updateObj.setStatus(ParamConstants.STATUS_DELETE);
@@ -72,7 +72,7 @@ public class LinkController implements BaseController<Link> {
     @Override
     @GetMapping("/{id}")
     @ApiOperation(value = "根据Id查询工作链接记录详情", notes = "根据Id查询工作链接记录详情", response = HttpMessage.class)
-    public HttpMessage<Link> detail(Integer id) {
+    public HttpMessage<Link> detail(@PathVariable(value = "id") Integer id) {
         return new HttpMessage<>(linkService.findById(id),CustomStatus.SUCCESS);
     }
 }

@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 public class HelpPoor {
     private Integer id;
 
+    @NotNull
+    private Integer orgId;
+
     @NotBlank
     private String name;
 
@@ -42,6 +45,14 @@ public class HelpPoor {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
     }
 
     public String getName() {

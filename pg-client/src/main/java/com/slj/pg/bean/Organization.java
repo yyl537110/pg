@@ -18,6 +18,10 @@ public class Organization {
 
     private Integer status;
 
+    private Integer left;
+
+    private Integer top;
+
     private Double width;
 
     private Double height;
@@ -114,6 +118,22 @@ public class Organization {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getLeft() {
+        return left;
+    }
+
+    public void setLeft(Integer left) {
+        this.left = left;
+    }
+
+    public Integer getTop() {
+        return top;
+    }
+
+    public void setTop(Integer top) {
+        this.top = top;
     }
 
     public Double getWidth() {

@@ -46,6 +46,8 @@ public class HomePageController {
             info.put("iconx",organization.getIconx());
             info.put("icony",organization.getIcony());
             info.put("path",organization.getPath());
+            info.put("left",organization.getLeft());
+            info.put("top",organization.getTop());
             maps.add(info);
         }
         return new HttpMessage<>(maps, CustomStatus.SUCCESS);
